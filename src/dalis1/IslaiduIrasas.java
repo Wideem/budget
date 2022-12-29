@@ -1,11 +1,11 @@
 package dalis1;
 
 public class IslaiduIrasas {
-    private double suma;
-    private String dataSuLaiku;
-    private String kategorija;
-    private String atsiskaitymoBudas;
-    private String papildomaInfo;
+    private final double suma;
+    private final String dataSuLaiku;
+    private final String kategorija;
+    private final String atsiskaitymoBudas;
+    private final String papildomaInfo;
 
     public IslaiduIrasas(double suma, String dataSuLaiku, String kategorija, String atsiskaitymoBudas, String papildomaInfo) {
         this.suma = suma;
