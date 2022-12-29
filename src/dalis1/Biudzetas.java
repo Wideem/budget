@@ -1,6 +1,5 @@
 package dalis1;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Biudzetas {
@@ -18,11 +17,13 @@ public class Biudzetas {
     private void pridetiPajamuIrasa(PajamuIrasas irasas) {
         pajamos[this.pajamuIrasasIndex] = irasas;
         System.out.println("Pajamu irasas sukrutas ir patalpintas " + this.pajamuIrasasIndex + " masyvo elemente");
+        this.pajamuIrasasIndex++;
     }
 
     private void pridetiIslaiduIrasa(IslaiduIrasas irasas) {
         islaidos[this.ilsaiduIrasasIndex] = irasas;
         System.out.println("Islaidu irasas sukrutas ir patalpintas " + this.ilsaiduIrasasIndex + " masyvo elemente");
+        this.ilsaiduIrasasIndex++;
     }
 
 
