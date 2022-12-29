@@ -1,4 +1,4 @@
-package dalis1;
+package dalis2;
 
 public class PajamuIrasas {
     private final double suma;

@@ -1,4 +1,4 @@
-package dalis1;
+package dalis2;
 
 import java.util.Scanner;
 
