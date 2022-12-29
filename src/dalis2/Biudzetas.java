@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Biudzetas {
-    //Saugome index of array kad zinotumet kur pridet:
-    private int pajamuIrasasIndex;
-    private  int ilsaiduIrasasIndex;
     private final ArrayList<PajamuIrasas> pajamos = new ArrayList<>();
     private final ArrayList<IslaiduIrasas> islaidos = new ArrayList<>();
+    //Saugome index of arrayList kad galetumem removint:
+    private int pajamuIrasasIndex;
+    private int ilsaiduIrasasIndex;
 
     public Biudzetas() {
         this.pajamuIrasasIndex = 0;
@@ -64,17 +64,46 @@ public class Biudzetas {
         this.pridetiPajamuIrasa(new PajamuIrasas(suma, data, kategorija, pozymisArIBanka, papildomaInfo));
     }
 
-    public void gautiPajamuIrasa(Scanner sc) {
+    public void gautiIrasa(Scanner sc, String islaiduTipas) {
         System.out.println("iveskite iraso numeri kuri norite gauti:");
         int n = sc.nextInt();
-        System.out.println(gautiPajamuIrasa(n));
-
+        if (islaiduTipas == "p") {
+            System.out.println(gautiPajamuIrasa(n));
+        } else {
+            System.out.println(gautiIslaiduIrasa(n));
+        }
     }
 
-    public void gautiIslaiduIrasa(Scanner sc) {
-        System.out.println("iveskite iraso numeri kuri norite gauti:");
+    public double balansas() {
+        double suma = 0;
+        for (PajamuIrasas pajamos : this.pajamos) {
+            suma += pajamos.getSuma();
+        }
+        for (IslaiduIrasas islaidos : this.islaidos) {
+            suma -= islaidos.getSuma();
+        }
+        return suma;
+    }
+
+    public void pasalintiIrasa(Scanner sc, String islaiduTipas) {
+        System.out.println("iveskite iraso numeri kuri norite pasalinti:");
         int n = sc.nextInt();
-        System.out.println(gautiIslaiduIrasa(n));
+        if (islaiduTipas == "p") {
+            pajamos.remove(n);
+        } else {
+            islaidos.remove(n);
+        }
+    }
+
+    public String gautiIslaidasPajamas() {
+        String rezutltatas = "";
+        for (PajamuIrasas pajamos : this.pajamos) {
+            rezutltatas += (String.format("Pajamos: %.2f\n", pajamos.getSuma()));
+        }
+        for (IslaiduIrasas islaidos : this.islaidos) {
+            rezutltatas += (String.format("Islaidos: %.2f\n", islaidos.getSuma()));
+        }
+        return rezutltatas;
     }
 }
 

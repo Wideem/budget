@@ -15,14 +15,12 @@ public class IslaiduIrasas {
         this.papildomaInfo = papildomaInfo;
     }
 
+    public double getSuma() {
+        return suma;
+    }
+
     @Override
     public String toString() {
-        return "IslaiduIrasas{" +
-                "suma=" + suma +
-                ", dataSuLaiku=" + dataSuLaiku +
-                ", kategorija=" + kategorija +
-                ", atsiskaitymoBudas=" + atsiskaitymoBudas +
-                ", papildomaInfo='" + papildomaInfo + '\'' +
-                '}';
+        return "IslaiduIrasas{" + "suma=" + suma + ", dataSuLaiku=" + dataSuLaiku + ", kategorija=" + kategorija + ", atsiskaitymoBudas=" + atsiskaitymoBudas + ", papildomaInfo='" + papildomaInfo + '\'' + '}';
     }
 }
