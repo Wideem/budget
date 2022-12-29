@@ -1,4 +1,4 @@
-package dalis2;
+package dalis3;
 
 import java.util.Scanner;
 
@@ -10,22 +10,18 @@ public class main {
         while (runProgram) {
             System.out.println("i - prideti islaidu irasa");
             System.out.println("p - prideti pajamu irasa");
-            System.out.println("g - gauti islaidu irasa");
-            System.out.println("k - gauti pajamu irasa");
+            System.out.println("g - gauti Irasus");
             System.out.println("b - gauti balansa");
             System.out.println("n - gauti visas islaidas ir pajamas");
-            System.out.println("z - pasalinti islaidu irasa");
-            System.out.println("x - pasalinti pajamu irasa");
+            System.out.println("z - pasalinti irasa");
             char c = sc.next().charAt(0);
             switch (c) {
                 case 'i' -> biudzetas.pridetiIslaiduIrasa(sc);
                 case 'p' -> biudzetas.pridetiPajamuIrasa(sc);
-                case 'g' -> biudzetas.gautiIrasa(sc, "i");
-                case 'k' -> biudzetas.gautiIrasa(sc, "p");
+                case 'g' -> biudzetas.gautiIrasa(sc);
                 case 'b' -> System.out.println(biudzetas.balansas());
                 case 'n' -> System.out.println(biudzetas.gautiIslaidasPajamas());
-                case 'z' -> biudzetas.pasalintiIrasa(sc, "i");
-                case 'x' -> biudzetas.pasalintiIrasa(sc, "p");
+                case 'z' -> biudzetas.pasalintiIrasa(sc);
                 default -> {
                     break;
                 }
