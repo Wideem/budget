@@ -21,4 +21,9 @@ public class PajamuIrasas extends Irasas {
     public String toString() {
         return "PajamuIrasas{" + "id=" + this.getId() + ", suma=" + suma + ", kategorija=" + kategorija + ", data=" + data + ", pozymisArIBanka=" + pozymisArIBanka + ", papildomaInfo='" + papildomaInfo + '\'' + '}';
     }
+
+    @Override
+    public String getCsvValue(){
+        return String.format("%s,%s,%s,%s,%s,%s,%s\n", this.getId(), this.irasoTipas, this.suma, this.kategorija, this.data, this.pozymisArIBanka, this.papildomaInfo);
+    }
 }

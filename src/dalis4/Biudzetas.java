@@ -1,11 +1,13 @@
 package dalis4;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Biudzetas {
     private final ArrayList<Irasas> irasuSarasas = new ArrayList<>();
+    private final String file =  "src/irasai.csv";
 
     //Saugome index of arrayList kad galetumem removint:
     private int irasaiIndex;
@@ -33,33 +35,47 @@ public class Biudzetas {
         return null;
     }
 
-
-    public void pridetiIslaiduIrasa(Scanner sc) {
+    public void pridetiIrasa(Scanner sc, String irasoTipas) {
+        double suma = 0;
         System.out.println("iveskite suma:");
-        double suma = sc.nextDouble();
-        System.out.println("iveskite data ir laika:");
-        String dataIrLaikas = sc.next();
-        System.out.println("iveskite kategorija:");
-        String kategorija = sc.next();
-        System.out.println("iveskite atsiskaitymo buda:");
-        String atsisakitymoBudas = sc.next();
-        System.out.println("iveskite papildoma info:");
-        String papildomaInfo = sc.next();
-        this.pridetiIrasa(new IslaiduIrasas(suma, dataIrLaikas, kategorija, atsisakitymoBudas, papildomaInfo));
-    }
-
-    public void pridetiPajamuIrasa(Scanner sc) {
-        System.out.println("iveskite suma:");
-        double suma = sc.nextDouble();
+        boolean klaida = true;
+        do {
+            String sumaStr = sc.next();
+            try {
+                suma = Double.parseDouble(sumaStr);
+                klaida = false;
+            } catch (NumberFormatException e) {
+                System.out.println("Ivestas ne skaicius! Iveskite dar karta");
+            }
+        } while (klaida);
         System.out.println("iveskite data");
         String data = sc.next();
         System.out.println("iveskite kategorija:");
         String kategorija = sc.next();
-        System.out.println("iveskite Ar i banka (True/False):");
-        Boolean pozymisArIBanka = sc.nextBoolean();
         System.out.println("iveskite papildoma info:");
         String papildomaInfo = sc.next();
-        this.pridetiIrasa(new PajamuIrasas(suma, data, kategorija, pozymisArIBanka, papildomaInfo));
+        if (Objects.equals(irasoTipas, "islaidos")) {
+            System.out.println("iveskite atsiskaitymo buda:");
+            String atsisakitymoBudas = sc.next();
+            this.pridetiIrasa(new IslaiduIrasas(suma, data, kategorija, atsisakitymoBudas, papildomaInfo));
+        } else if (Objects.equals(irasoTipas, "pajamos")) {
+            Boolean pozymisArIBanka = null;
+            System.out.println("iveskite Ar i banka (True/False):");
+            klaida = true;
+            do {
+                String pozymisArIBankaStr = sc.next();
+                try {
+                    pozymisArIBanka = Boolean.parseBoolean(pozymisArIBankaStr);
+                    klaida = false;
+                } catch (Exception e) {
+                    System.out.println("Ivestas ne Boolean! Iveskite dar karta");
+                }
+            } while (klaida);
+            this.pridetiIrasa(new PajamuIrasas(suma, data, kategorija, pozymisArIBanka, papildomaInfo));
+        } else {
+            throw new RuntimeException("Nesuprantamas Iraso tipas!");
+        }
+
     }
 
     public void gautiIrasa(Scanner sc) {
@@ -119,6 +135,9 @@ public class Biudzetas {
         System.out.println(irasuSarasas);
         String uuid = sc.next();
         Irasas i = this.gautiIrasa(uuid);
+        if(i == null){
+            throw new RuntimeException("Irasas su tokiu ID nera rastas");
+        }
         System.out.println("Suma: " + i.getSuma()); // This code repeats but I can't do anything as I need to use getter and setter for each field so I can't use for loop
         System.out.println("[1] – redaguoti, [2] – toliau.");
         int next = sc.nextInt();
@@ -178,8 +197,7 @@ public class Biudzetas {
     }
 
     private void atnaujintiIrasa(Irasas irasas) {
-        for (Irasas i : irasuSarasas
-        ) {
+        for (Irasas i : irasuSarasas) {
             if (i.equals(irasas)) {
                 i.setData(irasas.getData());
                 i.setSuma(irasas.getSuma());
@@ -195,6 +213,59 @@ public class Biudzetas {
 
         }
     }
+
+    public void issaugoti() {
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(this.file));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (Irasas i: irasuSarasas){
+            try {
+                bw.write(i.getCsvValue());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            bw.close();
+            System.out.println("failas su irasais issaugotas");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void nuskaityiFaila() {
+        BufferedReader br  = null;
+        try{
+            br = new BufferedReader(new FileReader(this.file));
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        String line = null;
+            while (true){
+                try {
+                    if ((line = br.readLine()) == null) break;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                String[] values = line.split(",");
+                String irasoTipas = values[1];
+                Double suma = Double.valueOf(values[2]);
+                String kategorija =values[3];
+                String data = values[4];
+                String papidlomaInfo = values[6];
+                if(irasoTipas.equals("pajamos")) {
+                    Boolean pozymisArIbanka= Boolean.valueOf(values[5]);
+                    this.pridetiIrasa(new PajamuIrasas(suma, data, kategorija, pozymisArIbanka, papidlomaInfo));
+                } else if (irasoTipas.equals("islaidos")) {
+                    String atsiskaitymoBudas = values[5];
+                    this.pridetiIrasa(new IslaiduIrasas(suma, data, kategorija, atsiskaitymoBudas, papidlomaInfo));
+                }
+            }
+        }
+
 }
 
 

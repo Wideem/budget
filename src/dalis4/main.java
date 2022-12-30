@@ -17,15 +17,19 @@ public class main {
             System.out.println("n - gauti visas islaidas ir pajamas");
             System.out.println("z - pasalinti irasa");
             System.out.println("r - redaguoti irasa");
+            System.out.println("5 - issaugoti duomenis i faila");
+            System.out.println("6 - gauti duomenis is failo");
             char c = sc.next().charAt(0);
             switch (c) {
-                case 'i' -> biudzetas.pridetiIslaiduIrasa(sc);
-                case 'p' -> biudzetas.pridetiPajamuIrasa(sc);
+                case 'i' -> biudzetas.pridetiIrasa(sc, "islaidos");
+                case 'p' -> biudzetas.pridetiIrasa(sc, "pajamos");
                 case 'g' -> biudzetas.gautiIrasa(sc);
                 case 'b' -> System.out.println(biudzetas.balansas());
                 case 'n' -> System.out.println(biudzetas.gautiIslaidasPajamas());
                 case 'z' -> biudzetas.pasalintiIrasa(sc);
                 case 'r' -> biudzetas.readaguotiIrasa(sc);
+                case '5' -> biudzetas.issaugoti();
+                case '6' -> biudzetas.nuskaityiFaila();
                 default -> {
                     break;
                 }

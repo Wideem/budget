@@ -72,4 +72,8 @@ public class Irasas {
                 ", irasoTipas='" + irasoTipas + '\'' +
                 '}';
     }
+
+    public String getCsvValue(){
+        return String.format("%s,%s,%s,%s,%s,%s\n", this.getId(), this.irasoTipas, this.suma, this.kategorija, this.data, this.papildomaInfo);
+    }
 }
