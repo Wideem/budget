@@ -1,10 +1,10 @@
-package dalis3;
+package dalis4;
 
 public class PajamuIrasas extends Irasas {
 
     private boolean pozymisArIBanka;
 
-    public PajamuIrasas(double suma, String data,String kategorija,  boolean pozymisArIBanka, String papildomaInfo) {
+    public PajamuIrasas(double suma, String data, String kategorija, boolean pozymisArIBanka, String papildomaInfo) {
         super(suma, data, kategorija, papildomaInfo, "pajamos");
         this.pozymisArIBanka = pozymisArIBanka;
     }

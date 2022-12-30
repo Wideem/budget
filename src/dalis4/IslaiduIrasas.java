@@ -1,4 +1,4 @@
-package dalis3;
+package dalis4;
 
 public class IslaiduIrasas extends Irasas {
 
